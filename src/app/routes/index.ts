@@ -31,6 +31,19 @@ const routes: RouteRecordRaw[] = [
         name: "Dashboard",
         component: () => import("@/app/modules/dashboard/views/index.vue"),
       },
+      //general-data
+      {
+        path: "general-data",
+        name: "GeneralData",
+        component: () => import("@/app/modules/general-data/views/index.vue"),
+      },
+      //categories
+      {
+        path: "categories",
+        name: "Categories",
+        component: () => import("@/app/modules/category/views/index.vue"),
+      },
+
       {
         path: "positions",
         name: "Positions",

@@ -55,6 +55,7 @@
 <script setup lang="ts">
 import { Ref, ref } from "vue";
 import { signIn } from "@/app/modules/auth/services";
+
 import { type AuthForm, AuthFormRules } from "../models";
 
 const form: Ref<AuthForm> = ref({

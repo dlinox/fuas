@@ -32,7 +32,7 @@
     </v-main>
     <v-footer color="grey-lighten-4" app>
       <v-spacer> </v-spacer>
-      <small> UNAP &copy; {{ new Date().getFullYear() }} </small>
+      <small> Lnx &copy; {{ new Date().getFullYear() }} </small>
     </v-footer>
   </v-app>
 </template>

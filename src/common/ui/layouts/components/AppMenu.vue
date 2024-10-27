@@ -19,6 +19,21 @@
       </template>
 
       <v-list-item
+        title="Datos generales"
+        prepend-icon="mdi-circle-small"
+        to="/a/general-data"
+        link
+        exact
+      />
+      <v-list-item
+        title="Categoías"
+        prepend-icon="mdi-circle-small"
+        to="/a/categories"
+        link
+        exact
+      />
+
+      <v-list-item
         title="Cargos"
         prepend-icon="mdi-circle-small"
         to="/a/positions"
