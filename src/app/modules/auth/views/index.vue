@@ -2,7 +2,7 @@
   <v-container
     class="h-100 d-flex justify-space-between align-center flex-column"
   >
-    <div>logo</div>
+    <div></div>
     <v-card class="w-md-75 bg-white" elevation="0">
       <div class="pa-4">
         <h3 class="">Bienvenido de nuevo</h3>
