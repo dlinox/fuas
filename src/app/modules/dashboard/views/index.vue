@@ -1,5 +1,4 @@
 <template>
-    dashboard
+  <v-card title="Dashboard" subtitle="Bienvenido a la aplicación"></v-card>
 </template>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

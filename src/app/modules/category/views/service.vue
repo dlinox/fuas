@@ -1,92 +1,102 @@
 <template>
-  <v-dialog max-width="900" v-model="dialog" activator="parent">
+  <v-dialog
+    max-width="600"
+    v-model="dialog"
+    activator="parent"
+    max-height="600"
+  >
     <v-card
       title="Servicios"
-      subtitle="Gestion de servicios"
+      :subtitle="category.type + ' - ' + category.name"
       :disabled="loading"
     >
       <v-card-item class="border-t border-b">
         <v-row class="d-flex justify-space-between">
-          <v-col cols="12" md="4">
-            <v-text-field
-              v-model="request.search"
+          <v-col cols="12" md="7">
+            <!-- <v-text-field
               label="Buscar"
               clearable
               @input="debouncedReload"
-            ></v-text-field>
+            ></v-text-field> -->
           </v-col>
           <v-col
             cols="12"
             md="4"
             class="d-md-flex d-block justify-end text-end"
           >
-            <v-btn class="h-md-auto me-2" :disabled="loading">
+            <v-btn class="me-2" :disabled="loading">
               nuevo
-              <ServiceForm @onSuccess="reLoadDataTable" />
-            </v-btn>
-            <v-btn
-              class="h-md-auto"
-              density="comfortable"
-              icon="mdi-reload"
-              v-tooltip="'Recargar registros'"
-              @click="init"
-              :loading="loadingTable"
-            >
+              <ServiceForm
+                @onSuccess="emit('onUpdate')"
+                :categoryId="category.id!"
+              />
             </v-btn>
           </v-col>
         </v-row>
       </v-card-item>
+      <v-list>
+        <v-list-item v-for="item in category.services" :key="item.id!">
+          <v-list-item-title> {{ item.name }} </v-list-item-title>
 
-      <ServiceDataTable
-        :options="request"
-        :loading="loadingTable"
-        :items="items"
-        :total="totalItems"
-        @onUpdateTable="reLoadDataTable"
-      />
+          <template #prepend>
+            <v-btn icon size="small" variant="text">
+              <v-icon size="small" color="grey"> mdi-dots-vertical </v-icon>
+              <v-menu activator="parent">
+                <v-list density="compact">
+                  <v-list-item
+                    key="edit"
+                    value="edit"
+                    append-icon="mdi-pencil"
+                    class="text-subtitle-2"
+                  >
+                    <template #append>
+                      <v-icon size="small"> mdi-pencil </v-icon>
+                    </template>
+                    Editar
+
+                    <ServiceForm
+                      @onSuccess="emit('onUpdate')"
+                      :categoryId="category.id!"
+                      :formState="item"
+                    />
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-btn>
+          </template>
+          <template #append>
+            <v-chip
+              :color="item.status ? 'success' : 'error'"
+              text-color="white"
+            >
+              {{ item.status ? "Habilitado" : "Deshabilitado" }}
+            </v-chip>
+          </template>
+        </v-list-item>
+      </v-list>
     </v-card>
   </v-dialog>
 </template>
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 
-import { _loadDataTable } from "../services/service.services";
-import { DataTableRequestDTO } from "@/common/models/DataTable.types";
-import { ServiceDataTable, ServiceForm } from "../components";
-import { ServiceDTO } from "../models/Service.types";
+import { CategoryDTO } from "../models/Category.types";
+// import debounce from "@/common/utils/debounce";
+import ServiceForm from "../components/ServiceForm.vue";
 
-import debounce from "@/common/utils/debounce";
+const emit = defineEmits(["onUpdate"]);
 
-const dialog = ref(false);
-const loading = ref(false);
-const loadingTable = ref(false);
-const items = ref<ServiceDTO[]>([]);
-const totalItems = ref(0);
+defineProps<{
+  category: CategoryDTO;
+}>();
 
-const request: Ref<DataTableRequestDTO> = ref({
-  itemsPerPage: 10,
-  sortBy: [],
-  page: 1,
-  search: "",
-  filters: {},
-});
+const dialog = ref<boolean>(false);
+const loading = ref<boolean>(false);
 
-const debouncedReload = debounce(() => {
-  reLoadDataTable();
-}, 400);
+// const debouncedReload = debounce(() => {}, 50);
 
-const reLoadDataTable = async () => {
-  loadingTable.value = true;
-  const response = await _loadDataTable(request.value);
-  items.value = response.data;
-  totalItems.value = response.total as number;
-  loadingTable.value = false;
-};
-
-const init = async () => {
-  loading.value = true;
-  await reLoadDataTable();
-  loading.value = false;
+const init = () => {
+  console.log("init");
 };
 
 init();

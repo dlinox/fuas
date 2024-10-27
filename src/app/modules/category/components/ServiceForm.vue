@@ -39,6 +39,7 @@
             :loading="loading"
           ></v-btn>
         </v-card-actions>
+        
       </v-card>
     </v-form>
   </v-dialog>
@@ -60,6 +61,10 @@ const props = defineProps({
     type: Object as () => Partial<ServiceDTO>,
     default: () => ({}),
   },
+  categoryId: {
+    type: Number,
+    required: true,
+  },
 });
 
 const loading = ref<boolean>(false);
@@ -68,6 +73,7 @@ const formRef = ref<HTMLFormElement | null>(null);
 const form = ref<ServiceDTO>({
   ...initServiceValues(),
   ...props.formState,
+  categoryId: props.categoryId,
 });
 
 const submit = async () => {

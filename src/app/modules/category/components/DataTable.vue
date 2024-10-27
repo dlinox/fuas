@@ -22,8 +22,8 @@
           variant="text"
           v-tooltip="'Servicios de ' + item.name"
         >
-        <v-icon>mdi-format-list-bulleted-type</v-icon>
-          <ServiceView />
+          <v-icon>mdi-format-list-bulleted-type</v-icon>
+          <ServiceView :category="item" @onUpdate="emit('onUpdateTable')" />
         </v-btn>
         <v-btn icon density="compact" variant="text">
           <v-icon>mdi-dots-vertical</v-icon>
