@@ -24,7 +24,11 @@
             md="4"
             class="d-md-flex d-block justify-end text-end"
           >
-            <v-btn class="me-2" :disabled="loading">
+            <v-btn
+              class="me-2"
+              :disabled="loading"
+              v-permission="['categories.services.create']"
+            >
               nuevo
               <ServiceForm
                 @onSuccess="emit('onUpdate')"
@@ -34,12 +38,17 @@
           </v-col>
         </v-row>
       </v-card-item>
-      <v-list>
+      <v-list v-permission="['categories.services.index']">
         <v-list-item v-for="item in category.services" :key="item.id!">
           <v-list-item-title> {{ item.name }} </v-list-item-title>
 
           <template #prepend>
-            <v-btn icon size="small" variant="text">
+            <v-btn
+              icon
+              size="small"
+              variant="text"
+              v-permission="['categories.services.edit']"
+            >
               <v-icon size="small" color="grey"> mdi-dots-vertical </v-icon>
               <v-menu activator="parent">
                 <v-list density="compact">
@@ -48,6 +57,7 @@
                     value="edit"
                     append-icon="mdi-pencil"
                     class="text-subtitle-2"
+                    v-permission="['categories.services.edit']"
                   >
                     <template #append>
                       <v-icon size="small"> mdi-pencil </v-icon>

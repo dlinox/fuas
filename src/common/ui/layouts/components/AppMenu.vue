@@ -9,7 +9,15 @@
       exact
     />
 
-    <v-list-group value="settings">
+    <v-list-group
+      value="settings"
+      v-permission="[
+        'categories.index',
+        'positions.index',
+        'offices.index',
+        'workers.index',
+      ]"
+    >
       <template v-slot:activator="{ props }">
         <v-list-item
           v-bind="props"
@@ -18,19 +26,13 @@
         ></v-list-item>
       </template>
 
-      <!-- <v-list-item
-        title="Datos generales"
-        prepend-icon="mdi-circle-small"
-        to="/a/general-data"
-        link
-        exact
-      /> -->
       <v-list-item
-        title="Categoías"
+        title="Categorías"
         prepend-icon="mdi-circle-small"
         to="/a/categories"
         link
         exact
+        v-permission="['categories.index']"
       />
 
       <v-list-item
@@ -39,6 +41,7 @@
         to="/a/positions"
         link
         exact
+        v-permission="['positions.index']"
       />
 
       <v-list-item
@@ -47,6 +50,7 @@
         to="/a/offices"
         link
         exact
+        v-permission="['offices.index']"
       />
 
       <v-list-item
@@ -55,10 +59,11 @@
         to="/a/workers"
         link
         exact
+        v-permission="['workers.index']"
       />
     </v-list-group>
 
-    <v-list-group value="security">
+    <v-list-group value="security" v-permission="['users.index']">
       <template v-slot:activator="{ props }">
         <v-list-item
           v-bind="props"
@@ -73,6 +78,7 @@
         to="/a/users"
         link
         exact
+        v-permission="['users.index']"
       />
     </v-list-group>
   </v-list>

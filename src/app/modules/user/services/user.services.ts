@@ -19,7 +19,6 @@ export const _loadDataTable = async (
       request
     );
 
-
     return response.data.data as DataTableResponseDTO<UserDTO>;
   } catch (error) {
     return initValuesDataTableResponse();
@@ -54,5 +53,16 @@ export const _getAllPermissions = async (): Promise<any[]> => {
     return response.data.data as any[];
   } catch (error) {
     return [];
+  }
+};
+
+//asignar permisos
+export const _assignPermissions = async (request: any): Promise<boolean> => {
+  try {
+    const token = localStorage.getItem("token") as string;
+    await http(token, baseUrl).post(`/assign-permissions/`, request);
+    return true;
+  } catch (error) {
+    return false;
   }
 };

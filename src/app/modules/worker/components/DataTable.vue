@@ -14,7 +14,12 @@
     @update:page="emit('onUpdateTable')"
   >
     <template v-slot:item.actions="{ item }">
-      <v-btn icon density="compact" variant="text">
+      <v-btn
+        icon
+        density="compact"
+        variant="text"
+        v-permission="['workers.edit', 'workers.delete']"
+      >
         <v-icon>mdi-dots-vertical</v-icon>
         <v-menu activator="parent">
           <v-list density="compact">
@@ -23,6 +28,7 @@
               value="edit"
               title="Editar"
               append-icon="mdi-pencil"
+              v-permission="['workers.edit']"
             >
               <Form :formState="item" @on-success="emit('onUpdateTable')" />
             </v-list-item>
@@ -32,18 +38,19 @@
               title="Eliminar"
               class="text-red"
               append-icon="mdi-delete"
+              v-permission="['workers.delete']"
             >
-            <DialogConfirm
-              title="Eliminar"
-              message="¿Está seguro de eliminar este registro?"
-              @on-confirm="
-                async () => {
-                  if (await _deleteItem(item.id!)) {
-                    emit('onUpdateTable');
+              <DialogConfirm
+                title="Eliminar"
+                message="¿Está seguro de eliminar este registro?"
+                @on-confirm="
+                  async () => {
+                    if (await _deleteItem(item.id!)) {
+                      emit('onUpdateTable');
+                    }
                   }
-                }
-              "
-            />
+                "
+              />
             </v-list-item>
           </v-list>
         </v-menu>
@@ -71,7 +78,6 @@ import { headers } from "@/app/modules/worker/constants";
 import { Form } from "@/app/modules/worker/components";
 
 import { _deleteItem } from "@/app/modules/worker/services/worker.services";
-
 
 const emit = defineEmits(["onUpdateTable"]);
 defineProps<{

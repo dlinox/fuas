@@ -22,15 +22,24 @@
               key="permissions"
               value="permissions"
               class="text-subtitle-2"
+              v-permission="['users.assign-permissions']"
             >
               <template #append>
                 <v-icon size="small"> mdi-lock </v-icon>
               </template>
               Asignar permisos
-              <AssignPermissions :permissions="item.permissions" />
+              <AssignPermissions
+                :permissions="item.permissions"
+                :userId="item.id!"
+              />
             </v-list-item>
 
-            <v-list-item key="edit" value="edit" class="text-subtitle-2">
+            <v-list-item
+              key="edit"
+              value="edit"
+              class="text-subtitle-2"
+              v-permission="['users.edit']"
+            >
               <template #append>
                 <v-icon size="small"> mdi-pencil </v-icon>
               </template>
@@ -41,6 +50,7 @@
               key="delete"
               value="delete"
               class="text-red text-subtitle-2"
+              v-permission="['users.delete']"
             >
               <template #append>
                 <v-icon size="small" color="red"> mdi-delete </v-icon>

@@ -3,22 +3,18 @@
     <v-navigation-drawer v-model="drawer" app>
       <AppMenu />
       <template #append>
-        <v-list-item
-          class="py-2 border-t"
-          :title="authStore.authState.user.full_name"
-          :subtitle="authStore.authState.user.role"
-          prepend-avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoPYGvsOKyoPhMLvER1SNT4W3RyX6VPeXTxg&s"
-        >
-          <template v-slot:append>
-            <v-btn
-              @click=""
-              color="grey-lighten-1"
-              icon="mdi-power"
-              variant="text"
-              size="small"
-            ></v-btn>
-          </template>
-        </v-list-item>
+        <v-list three-line>
+          <v-list-item
+            class="py-2 border-t"
+            :subtitle="authStore.authState.user.full_name"
+
+            prepend-avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoPYGvsOKyoPhMLvER1SNT4W3RyX6VPeXTxg&s"
+          >
+            <template v-slot:append>
+              <SignOut />
+            </template>
+          </v-list-item>
+        </v-list>
       </template>
     </v-navigation-drawer>
     <v-app-bar floating elevation="0">
@@ -41,6 +37,7 @@
 import { ref } from "vue";
 import { useAuthStore } from "@/app/store/auth.stores";
 import AppMenu from "./components/AppMenu.vue";
+import SignOut from "@/app/modules/auth/components/SignOut.vue";
 
 const authStore = useAuthStore();
 const drawer = ref(true);

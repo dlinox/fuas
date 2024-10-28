@@ -1,9 +1,5 @@
 <template>
-  <v-card
-    title="Oficinas"
-    subtitle="Gestión de oficinas"
-    :disabled="loading"
-  >
+  <v-card title="Oficinas" subtitle="Gestión de oficinas" :disabled="loading">
     <v-card-item class="border-t border-b">
       <v-row class="d-flex justify-space-between">
         <v-col cols="12" md="4">
@@ -12,10 +8,15 @@
             label="Buscar"
             clearable
             @input="reLoadDataTable"
+            v-permission="['offices.index']"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" class="d-md-flex d-block justify-end text-end">
-          <v-btn class="h-md-auto me-2" :disabled="loading">
+          <v-btn
+            class="h-md-auto me-2"
+            :disabled="loading"
+            v-permission="['offices.create']"
+          >
             nuevo
             <Form @onSuccess="reLoadDataTable" />
           </v-btn>
@@ -26,6 +27,7 @@
             v-tooltip="'Recargar registros'"
             @click="init"
             :loading="loadingTable"
+            v-permission="['offices.index']"
           >
           </v-btn>
         </v-col>
@@ -33,6 +35,7 @@
     </v-card-item>
 
     <DataTable
+      v-permission="['offices.index']"
       :options="request"
       :loading="loadingTable"
       :items="items"

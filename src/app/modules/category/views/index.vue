@@ -15,7 +15,9 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" class="d-md-flex d-block justify-end text-end">
-          <v-btn class="h-md-auto me-2" :disabled="loading">
+          <v-btn 
+          v-permission="['categories.create']"
+          class="h-md-auto me-2" :disabled="loading">
             nuevo
             <Form @onSuccess="reLoadDataTable" />
           </v-btn>
@@ -26,6 +28,7 @@
             v-tooltip="'Recargar registros'"
             @click="init"
             :loading="loadingTable"
+            v-permission="['categories.index']"
           >
           </v-btn>
         </v-col>
@@ -33,6 +36,7 @@
     </v-card-item>
 
     <DataTable
+      v-permission="['categories.index']"
       :options="request"
       :loading="loadingTable"
       :items="items"

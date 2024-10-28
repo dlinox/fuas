@@ -22,6 +22,12 @@ export const useAuthStore = defineStore("auth", () => {
     router.push("/");
   };
 
+  const singOut = () => {
+    clearAuthState();
+    localStorage.removeItem("token");
+    router.push("/");
+  };
+
   const setAuthState = (auth: Auth, isSignIn: boolean = false) => {
     authState.value = auth;
     if (isSignIn) router.push(auth.user.redirect_route);
@@ -45,5 +51,6 @@ export const useAuthStore = defineStore("auth", () => {
     setAuthState,
     clearAuthState,
     signInSuccess,
+    singOut,
   };
 });

@@ -21,6 +21,7 @@
           color="black"
           variant="text"
           v-tooltip="'Servicios de ' + item.name"
+          v-permission="['categories.services.index']"
         >
           <v-icon>mdi-format-list-bulleted-type</v-icon>
           <ServiceView :category="item" @onUpdate="emit('onUpdateTable')" />
@@ -34,6 +35,7 @@
                 value="edit"
                 append-icon="mdi-pencil"
                 class="text-subtitle-2"
+                v-permission="['categories.edit']"
               >
                 <template #append>
                   <v-icon size="small"> mdi-pencil </v-icon>
@@ -45,6 +47,7 @@
                 key="delete"
                 value="delete"
                 class="text-red text-subtitle-2"
+                v-permission="['categories.delete']"
               >
                 Eliminar
                 <template #append>

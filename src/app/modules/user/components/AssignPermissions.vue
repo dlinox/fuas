@@ -47,13 +47,22 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { _getAllPermissions } from "@/app/modules/user/services/user.services";
+import {
+  _getAllPermissions,
+  _assignPermissions,
+} from "@/app/modules/user/services/user.services";
 
 const emit = defineEmits(["onSuccess"]);
 
 const props = defineProps<{
+  userId: number;
   permissions: number[];
 }>();
+
+const form = ref({
+  userId: props.userId,
+  permissions: [] as number[],
+});
 
 const formRef = ref<HTMLFormElement | null>(null);
 
@@ -62,7 +71,9 @@ const dialog = ref<boolean>(false);
 const selectedPermissions = ref<number[]>([...props.permissions]);
 
 const submit = async () => {
-  console.log(selectedPermissions.value);
+  form.value.permissions = selectedPermissions.value;
+  let response = await _assignPermissions(form.value);
+  console.log(response);
 };
 
 const allPermissions = ref<any[]>([]);

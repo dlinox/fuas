@@ -14,15 +14,21 @@
     @update:page="emit('onUpdateTable')"
   >
     <template v-slot:item.actions="{ item }">
-      <v-btn icon density="compact" variant="text">
+      <v-btn
+        icon
+        density="compact"
+        variant="text"
+        v-permission="['positions.edit', 'positions.delete']"
+      >
         <v-icon>mdi-dots-vertical</v-icon>
         <v-menu activator="parent">
-          <v-list density="compact" >
+          <v-list density="compact">
             <v-list-item
               key="edit"
               value="edit"
               append-icon="mdi-pencil"
               class="text-subtitle-2"
+              v-permission="['positions.edit']"
             >
               <template #append>
                 <v-icon size="small"> mdi-pencil </v-icon>
@@ -34,6 +40,7 @@
               key="delete"
               value="delete"
               class="text-red text-subtitle-2"
+              v-permission="['positions.delete']"
             >
               Eliminar
               <template #append>
@@ -89,7 +96,7 @@ const loading = ref<boolean>(false);
 const deleteItem = async (id: number) => {
   loading.value = true;
   if (await _deleteItem(id)) {
-    emit('onUpdateTable');
+    emit("onUpdateTable");
   }
   loading.value = false;
 };
