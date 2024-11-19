@@ -1,4 +1,4 @@
-import { user, clearSession } from "@/app/modules/auth/services";
+import { user, } from "@/app/modules/auth/services";
 
 import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
