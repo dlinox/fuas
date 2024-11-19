@@ -42,9 +42,6 @@
           </v-row>
         </v-form>
       </v-card-item>
-      <v-card-item class="text-end">
-        <a href="" class="text-primary"> ¿Olvidaste tu contraseña? </a>
-      </v-card-item>
     </v-card>
 
     <div class="text-center">
