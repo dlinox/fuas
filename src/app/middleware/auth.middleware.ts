@@ -10,7 +10,7 @@ export const authMiddleware = async (
   const auth = await user();
   if (!auth) {
     console.log("Redirecting to login page...");
-    await clearSession();
+    // await clearSession();
     next({ name: "Login" });
   } else {
     next();

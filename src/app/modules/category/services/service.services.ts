@@ -4,7 +4,10 @@ import {
   DataTableResponseDTO,
   initValuesDataTableResponse,
 } from "@/common/models/DataTable.types";
+
 import { ServiceDTO } from "../models/Service.types";
+
+import { getSessionToken } from "@/common/utils/session";
 
 const baseUrl = import.meta.env.VITE_APP_API_URL + "/services";
 
@@ -12,7 +15,7 @@ export const _loadDataTable = async (
   request: DataTableRequestDTO
 ): Promise<DataTableResponseDTO<ServiceDTO>> => {
   try {
-    const token = localStorage.getItem("token") as string;
+    const token = getSessionToken() as string;
     const response = await http(token, baseUrl).post(
       "/load-data-table",
       request
@@ -25,7 +28,7 @@ export const _loadDataTable = async (
 
 export const _saveItem = async (item: ServiceDTO): Promise<boolean> => {
   try {
-    const token = localStorage.getItem("token") as string;
+    const token = getSessionToken() as string;
     await http(token, baseUrl).post("/save", item);
     return true;
   } catch (error) {
@@ -35,19 +38,18 @@ export const _saveItem = async (item: ServiceDTO): Promise<boolean> => {
 
 export const _deleteItem = async (id: number): Promise<boolean> => {
   try {
-    const token = localStorage.getItem("token") as string;
+    const token = getSessionToken() as string;
     await http(token, baseUrl).delete(`/delete/${id}`);
-    return true;    
+    return true;
   } catch (error) {
     return false;
   }
 };
 
-
 //load-select
 export const _loadSelect = async (): Promise<any[]> => {
   try {
-    const token = localStorage.getItem("token") as string;
+    const token = getSessionToken() as string;
     const response = await http(token, baseUrl).get("/load-select");
     return response.data.data;
   } catch (error) {

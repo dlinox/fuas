@@ -1,3 +1,5 @@
-import SignInImage from './banner-sign-in.jpg';
+import SignInImage from "./banner-sign-in.jpg";
 
-export { SignInImage };
+import LogoSISImage from "./logo-sis.jpg";
+
+export { SignInImage, LogoSISImage };

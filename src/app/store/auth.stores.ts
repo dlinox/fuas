@@ -24,8 +24,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   const singOut = () => {
     clearAuthState();
-    localStorage.removeItem("token");
-    router.push("/");
+    // window.location.href = "/";
+    // router.replace("/");
   };
 
   const setAuthState = (auth: Auth, isSignIn: boolean = false) => {

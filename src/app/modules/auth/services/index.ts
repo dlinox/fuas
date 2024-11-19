@@ -2,11 +2,17 @@ import { http } from "@/common/helpers/http";
 import { AuthForm } from "../models";
 import { useAuthStore } from "@/app/store/auth.stores";
 
+import {
+  getSessionToken,
+  setSessionToken,
+  removeSessionToken,
+} from "@/common/utils/session";
+
 export const signIn = async (form: AuthForm): Promise<boolean> => {
   const authStore = useAuthStore();
   try {
     let response = await http().post(`/auth/sign-in`, form);
-    localStorage.setItem("token", response.data.token);
+    setSessionToken(response.data.token);
     authStore.setAuthState(response.data, true);
     return true;
   } catch (error) {
@@ -17,11 +23,10 @@ export const signIn = async (form: AuthForm): Promise<boolean> => {
 export const signOut = async () => {
   const authStore = useAuthStore();
   try {
-    let token = localStorage.getItem("token") as string;
+    let token = getSessionToken();
     let response = await http(token).post(`/auth/sign-out`, null);
-    localStorage.removeItem("token");
-    authStore.clearAuthState();
-    window.location.href = "/";
+    removeSessionToken();
+    authStore.singOut();
     return response.data;
   } catch (error) {
     return false;
@@ -31,20 +36,19 @@ export const signOut = async () => {
 export const user = async () => {
   const authStore = useAuthStore();
   try {
-    let token = localStorage.getItem("token") as string;
+    let token = getSessionToken();
 
     if (!token) {
-      localStorage.removeItem("token");
-      authStore.clearAuthState();
+      removeSessionToken();
+      authStore.singOut();
       return;
     }
-
     let response = await http(token).get(`auth/user`);
     authStore.setAuthState(response.data);
     return response.data;
   } catch (error: any) {
-    // localStorage.removeItem("token");
-    // authStore.clearAuthState();
+    // removeSessionToken();
+    // authStore.singOut();
     return false;
   }
 };
